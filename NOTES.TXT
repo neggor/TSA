@@ -1,0 +1,5 @@
+The idea is to generate: 
+    1- Vector representation of each image.
+    2- A matrix of orthonormal columns that put an image on the basis where the lie algebras act as a block diagonal matrix.
+
+However, for each image, the action and the code must be derived given the representation and matrices...

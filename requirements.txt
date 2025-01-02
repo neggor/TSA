@@ -1,0 +1,5 @@
+geoopt==0.5.0
+matplotlib==3.7.4
+numpy==1.24.3
+torch==2.4.1+cu118
+torchvision==0.19.1+cu118
