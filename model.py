@@ -208,7 +208,7 @@ def log_loss(y, x, w, omega_matrix, sigma = 0.1, prior_k = 0, coupled = False):
 def compute_probas(y, x, w, sigma = 0.1, prior_k = 0):
     return torch.exp(log_proba_y_given_x(y, x, w, sigma = sigma, prior_k = prior_k))
 
-def train_model(train, references, w, omega_matrix, lr = 0.5, n_epochs = 30, batch_size = 256):
+def train_model(train, references, w, omega_matrix, lr = 0.5, n_epochs = 1, batch_size = 256):
     w_optimizer = geoopt.optim.RiemannianAdam([w], lr=lr)
 
     # generate data loader with train and reference
