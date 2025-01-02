@@ -208,7 +208,7 @@ def log_loss(y, x, w, omega_matrix, sigma = 0.1, prior_k = 0, coupled = False):
 def compute_probas(y, x, w, sigma = 0.1, prior_k = 0):
     return torch.exp(log_proba_y_given_x(y, x, w, sigma = sigma, prior_k = prior_k))
 
-def train_model(train, references, w, omega_matrix, lr = 0.5, n_epochs = 20, batch_size = 256):
+def train_model(train, references, w, omega_matrix, lr = 0.5, n_epochs = 30, batch_size = 256):
     w_optimizer = geoopt.optim.RiemannianAdam([w], lr=lr)
 
     # generate data loader with train and reference
@@ -276,9 +276,9 @@ if __name__ == "__main__":
     w = torch.randn(28*28, 100)
     w = orthogonalize(w)
     fig, axs = plt.subplots(10, 10, figsize=(20, 20))
-    for i in range(100):
-        axs[i//10, i%10].imshow(w[:, i].detach().numpy().reshape(28, 28), cmap='gray')
-    plt.show()
+    #for i in range(100):
+    #    axs[i//10, i%10].imshow(w[:, i].detach().numpy().reshape(28, 28), cmap='gray')
+    #plt.show()
     print(torch.allclose(w.t() @ w, torch.eye(w.shape[-1]), 1e-4, 1e-4))
     w_manifold = geoopt.manifolds.Stiefel()
     w = geoopt.ManifoldParameter(w, manifold=w_manifold,requires_grad=True)
@@ -303,7 +303,8 @@ if __name__ == "__main__":
         axs[i, 1].set_title('Reference')
         axs[i, 1].axis('off')
     plt.tight_layout()
-    plt.show()    
+    plt.savefig('train_reference.png')    
+    plt.close("all")
     # convert to tensor
     #w = w.clone().detach().requires_grad_(True)
     w = train_model(x, y, w, omega_matrix)
@@ -311,7 +312,7 @@ if __name__ == "__main__":
     fig, axs = plt.subplots(10, 10, figsize=(20, 20))
     for i in range(100):
         axs[i//10, i%10].imshow(w[:, i].detach().numpy().reshape(28, 28), cmap='gray')
-    plt.show()
+    plt.savefig('w.png')
     plt.close("all")
     # TODO plot a rotation ! 
     # plot reference, x and rotated for 5 different examples
@@ -331,7 +332,7 @@ if __name__ == "__main__":
         axs[i, 3].set_title('Reconstructed no rotation')
         axs[i, 3].axis('off')
     plt.tight_layout()
-    plt.show()
+    plt.savefig('rotated.png')
 
     plt.matshow((w @ w.t() @ x[idx[0:1]].t()).detach().numpy().reshape(28, 28))
     plt.show()
