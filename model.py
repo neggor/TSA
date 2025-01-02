@@ -8,22 +8,6 @@ import geoopt
 import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
-#torch.autograd.set_detect_anomaly(True)
-
-# TODO clean and make it run on gpu
-# get visualizations of the angles.
-#  
-# The interesting thing is that, despie having
-# WR(s)W^Tx = y, when computing the ML estimation
-# I integrate over all possible R(s) so, actually
-# I do not have to deal with the R(s) matrix explicitly.
-
-# For the first, simplest version, it will suffice
-# to just use the decoupled model
-
-# The decoupled model also makes things easier
-# because the integrals are very simple and I can
-# just backpropagate through the solution.
 
 def orthogonalize(w):
     # make it a matrix with det = 1
@@ -293,7 +277,7 @@ if __name__ == "__main__":
     w = orthogonalize(w)
     fig, axs = plt.subplots(10, 10, figsize=(20, 20))
     for i in range(100):
-        axs[i//10, i%10].imshow(w[:, i].detach().numpy().reshape(28, 28))
+        axs[i//10, i%10].imshow(w[:, i].detach().numpy().reshape(28, 28), cmap='gray')
     plt.show()
     print(torch.allclose(w.t() @ w, torch.eye(w.shape[-1]), 1e-4, 1e-4))
     w_manifold = geoopt.manifolds.Stiefel()
@@ -326,7 +310,7 @@ if __name__ == "__main__":
     # plot w in a grid 1 plot for each column
     fig, axs = plt.subplots(10, 10, figsize=(20, 20))
     for i in range(100):
-        axs[i//10, i%10].imshow(w[:, i].detach().numpy().reshape(28, 28))
+        axs[i//10, i%10].imshow(w[:, i].detach().numpy().reshape(28, 28), cmap='gray')
     plt.show()
     plt.close("all")
     # TODO plot a rotation ! 

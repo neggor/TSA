@@ -116,10 +116,3 @@ def get_data(class_nb=4):
 
 if __name__ == '__main__':
     get_data(class_nb=4)
-    #data  = download_MNIST()
-    #data = torch.tensor(data).unsqueeze(1).float() # because MNIST is grayscale
-    ##rotated_data = get_rotated_images(data, 90)
-    ##visualize_batch(rotated_data)
-#
-    #data_array = get_rotated_dataset(data, 6000)
-    #train_data, test_data = handle_data(data_array)
